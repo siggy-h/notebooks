@@ -1,0 +1,60 @@
+/*
+*  ml4 all 2018
+*  Machine Learning art and javascript
+*  Amy Cheng
+*/
+
+var Architect = synaptic.Architect,
+  // create a perceptron aka feed-forward neural network
+  // with 2 layers for output, 15 hidden, and 3 output layers
+
+perceptron = new Architect.Perceptron(2,15,3),
+
+
+// html page
+
+<body>
+  <img src="media/ice.png" id="image" alt="">
+  <canvas id="_canvas" height="600" width="600"></canvas>
+
+  <script type="text/javascript" src="js/synaptic.js"></script>
+  <script type="text/javascript" src="js/simple-feed-forward.js"></script>
+
+  </body>
+
+// converting image into numbers so the computer will understand it
+
+function getPixels() {
+  var imageContext = canvas.getContext('2d').imageData;
+  // get pixel data via the Canvas api
+  imageContext.drawImage(imageElement, 0,0);
+  imageData = canvasContext.getImageData(0, 0, imageElement.naturalWidth, imageElement.naturalHeight);
+  return imageData.data;
+}
+
+function getPixelColor(data, xPos, yPos) {
+  // grabs the values for the pixel the position
+  // assumes the image is square
+  var red = data[((imageWidth * yPos) + xPod) * 4],
+  var green = data[((imageWidth * yPos) + xPod) * 4 + 1],
+  var blue = data[((imageWidth * yPos) + xPod) * 4 + 2],
+
+  // return RGB color values
+  return [red / 255, green/255. blue/255];
+}
+
+// training
+
+function train() {
+  console.log('training');
+  var learningRate = .01/(1 + .0005 * iteration);
+
+  for(var x = 0; x < imageWidth; x +=1) {
+    for(var y = 0; y < imageHeight; y+=1) {
+      // compute state and return output
+      perception.activate([x/imageWidth, y/imageHeight]);
+      // back propagate error, passing in the learning rate
+      perception.propagate(learningRate, getPixelColor(imagePixelData, x, y));
+    }
+  }
+}
